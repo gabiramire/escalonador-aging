@@ -1,14 +1,14 @@
 # Nome do compilador
 CXX = g++
 
-# Opções de compilação (-Wall ativa avisos, -O2 otimiza o código)
+# Opções de compilação
 CXXFLAGS = -Wall -O2
 
 # Nome do executável
-TARGET = processo
+TARGET = escalonador.exe
 
-# Lista de arquivos-fonte
-SRCS = processo.cpp
+# Arquivos-fonte
+SRCS = main.cpp Escalonador.cpp
 
 # Regra padrão: compilar o programa
 all: $(TARGET)
@@ -18,4 +18,4 @@ $(TARGET): $(SRCS)
 
 # Limpar arquivos gerados
 clean:
-	del $(TARGET).exe
+	del /F /Q $(TARGET)
