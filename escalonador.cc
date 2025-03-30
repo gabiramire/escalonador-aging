@@ -21,6 +21,12 @@ void Escalonador::aplicar_aging(int tempo_atual, std::map<int, std::vector<std::
 }
 
 void Escalonador::executar_simulacao() {
+    std::cout << "\n=== Processos ===\n";
+    for (size_t i = 0; i < todos_processos.size(); ++i) {
+        std::cout << "P" << (i + 1) << ": " << todos_processos[i]->tipo() << std::endl;
+        std::cout << "  prioridade inicial: " << todos_processos[i]->prioridade << std::endl;
+    }
+
     int tempo_atual = 0;
     std::map<int, std::vector<std::string>> eventos_aging;
     std::map<int, std::map<int, std::string>> linha_tempo;
@@ -71,7 +77,7 @@ void Escalonador::executar_simulacao() {
                 return (a->prioridade < b->prioridade) ||
                        (a->prioridade == b->prioridade && a->ordem_chegada > b->ordem_chegada);  // desempate por ordem de chegada
             });
-            executando = *it;
+            executando = *it; 
             executando->estado = EXECUTANDO;
             fila_prontos.erase(std::remove(fila_prontos.begin(), fila_prontos.end(), executando), fila_prontos.end());
         }
@@ -100,10 +106,6 @@ void Escalonador::executar_simulacao() {
 }
 
 void Escalonador::imprimir_linha_tempo(const std::map<int, std::map<int, std::string>>& linha_tempo, const std::map<int, std::vector<std::string>>& eventos, int tempo_total) {
-    std::cout << "\n=== Identificadores dos Processos ===\n";
-    for (size_t i = 0; i < todos_processos.size(); ++i) {
-        std::cout << "P" << (i + 1) << ": " << todos_processos[i]->tipo() << std::endl;
-    }
 
     std::cout << "\n=== Linha do Tempo ===\n\n";
     std::cout << std::setw(6) << "Tempo";
@@ -115,7 +117,7 @@ void Escalonador::imprimir_linha_tempo(const std::map<int, std::map<int, std::st
     for (int t = 0; t < tempo_total; ++t) {
         std::cout << std::setw(6) << t;
         for (size_t i = 0; i < todos_processos.size(); ++i) {
-            std::string estado = linha_tempo.at(t).count(i) ? linha_tempo.at(t).at(i) : "  ";
+            std::string estado = linha_tempo.at(t).count(i) ? linha_tempo.at(t).at(i) : "  "; 
             std::cout << " | " << std::setw(2) << estado;
         }
         std::cout << " | ";
