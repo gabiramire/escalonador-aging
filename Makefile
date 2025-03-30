@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -O2
 TARGET = escalonador.exe
 
 # Arquivos-fonte
-SRCS = main.cpp Escalonador.cpp
+SRCS = main.cc escalonador.cc
 
 # Regra padrão: compilar o programa
 all: $(TARGET)
@@ -18,4 +18,4 @@ $(TARGET): $(SRCS)
 
 # Limpar arquivos gerados
 clean:
-	del /F /Q $(TARGET)
+	rm -f $(TARGET) *.o *~
