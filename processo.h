@@ -3,9 +3,11 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 using namespace std;
 
-enum Estado { NOVO, PRONTO, EXECUTANDO, CONCLUIDO };
+// BLOQUEADO adicionado para operações de I/O
+enum Estado { NOVO, PRONTO, EXECUTANDO, CONCLUIDO, BLOQUEADO };
 
 class Processo {
 public:
@@ -55,26 +57,26 @@ public:
 };
 
 class ProcessoIO : public Processo {
-private:
+ public:
+    int bloqueios = 0;
     bool executando = true;
-    int ciclos_parados = 0;
-
-public:
-    ProcessoIO(int id, int chegada, int tempo, int prioridade)
-        : Processo(id, chegada, tempo, prioridade) {}
-
+    ProcessoIO(int id, int chegada, int tempo, int prioridade, int bloqueios)
+    : Processo(id, chegada, tempo, prioridade),
+    bloqueios(bloqueios) {}
+    
     bool executar_ciclo() override {
         if (estado != EXECUTANDO) return false;
-    
-        if (ciclos_parados == 0) {
-            tempo_restante--;
-            ciclos_parados = 1; 
-            return true;
-        }
         
-        // bloqueia o processo por 1 ciclo
-        ciclos_parados = 0;
-        return false;
+        tempo_restante--;
+        
+        // // Simula bloqueio de I/O
+        // if (bloqueios > 0 && rand() % 2 == 0) {  // Se tiver bloqueios restantes e for o momento (aleatório)
+        //     bloqueios--;
+        //     estado = BLOQUEADO;
+        //     cout << "teste \n";
+        //     return true;
+        // }
+        return true;
     }
         
     string tipo() const override {
@@ -83,34 +85,30 @@ public:
 };
 
 class ProcessoMemoria : public Processo {
-private:
-    int ciclos_parados = 0;
+ public:
+    int ciclos_aguardar = 0;
 
-public:
-    ProcessoMemoria(int id, int chegada, int tempo, int prioridade)
-        : Processo(id, chegada, tempo, prioridade) {}
-        bool executar_ciclo() override {
-            if (estado != EXECUTANDO) return false;
-        
-            if (ciclos_parados == 0) {
-                tempo_restante--;
-                ciclos_parados = 1;
-                return true;
-            }
-        
-            if (1 <= ciclos_parados && ciclos_parados <= 3) {
-                ciclos_parados++;
-                return false;
-            }
-        
-            if (ciclos_parados == 4) {
-                tempo_restante--;
-                ciclos_parados = 1; 
-                return true;
-            }
-        
-            return false; 
-        }        
+    ProcessoMemoria(int id, int chegada, int tempo, int prioridade, int ciclos_aguardar)
+        : Processo(id, chegada, tempo, prioridade),
+          ciclos_aguardar(ciclos_aguardar) {}
+
+    bool executar_ciclo() override {
+        if (estado != EXECUTANDO) return false;
+    
+        /*
+        Simula a espera das operações de memória.
+        */
+
+        if (ciclos_aguardar > 0) {
+            ciclos_aguardar--;
+            tempo_restante--;
+            return false;
+        }
+
+        tempo_restante--;
+    
+        return true; 
+    }        
 
     string tipo() const override {
         return "Mem";
