@@ -12,14 +12,14 @@ Este projeto implementa um escalonador de processos utilizando a técnica de **A
 # I/O
 Há um atributo de inicialização que estipula quantos bloqueios para I/O haverão na simulação. O mesmo depende da combinação com um evento aleatório disparado por randint (50% de chance), para dar certa aleatoriedade.
 # Memória
-Há um atributo de inicialização que estipula por quantos ciclos estaria havendo interação com a memória. Demais processamentos é denoatado por #.
+Há um atributo de inicialização que estipula por quantos ciclos estaria havendo interação com a memória. Demais processamentos são denotados por ##.
 # CPU
-Cálculos pesados. Denotado por #.
+Cálculos pesados. Denotado por ##.
 
 ** Seria legal agregar algo aos métodos de executar_ciclo para dar um enfeite **
 
 ## Output
 - Símbolos por estado de processo:
     - Pronto: --
-    - Executando: ## ou == (memory fetching simulation)
-    - Bloqueado: O
+    - Executando: ## ou # (memory fetching simulation)
+    - Bloqueado: ==
