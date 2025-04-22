@@ -58,11 +58,11 @@ public:
 
 class ProcessoIO : public Processo {
  public:
-    int bloqueios = 0;
+    int bloqueios = 2;  // Mudar ao critério
     bool executando = true;
-    ProcessoIO(int id, int chegada, int tempo, int prioridade, int bloqueios)
-    : Processo(id, chegada, tempo, prioridade),
-    bloqueios(bloqueios) {}
+    
+    ProcessoIO(int id, int chegada, int tempo, int prioridade)
+    : Processo(id, chegada, tempo, prioridade) {}
     
     bool executar_ciclo() override {
         if (estado != EXECUTANDO) return false;
@@ -86,11 +86,10 @@ class ProcessoIO : public Processo {
 
 class ProcessoMemoria : public Processo {
  public:
-    int ciclos_aguardar = 0;
+    int ciclos_aguardar = 4;  // Mudar ao critério
 
-    ProcessoMemoria(int id, int chegada, int tempo, int prioridade, int ciclos_aguardar)
-        : Processo(id, chegada, tempo, prioridade),
-          ciclos_aguardar(ciclos_aguardar) {}
+    ProcessoMemoria(int id, int chegada, int tempo, int prioridade)
+        : Processo(id, chegada, tempo, prioridade) {}
 
     bool executar_ciclo() override {
         if (estado != EXECUTANDO) return false;
