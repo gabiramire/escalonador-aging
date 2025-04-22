@@ -1,6 +1,7 @@
 #include "escalonador.h"
 
 int main() {
+    srand(time(NULL));
     Escalonador escalonador;
 
     // CPU: id, tempo_chegada, tempo_execucao, prioridade
