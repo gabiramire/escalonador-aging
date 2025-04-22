@@ -22,8 +22,8 @@ public:
     Estado estado;
     vector<string> linha_tempo;
 
-    Processo(int _id, int _chegada, int _execucao, int _prioridade)
-        : id(_id), tempo_chegada(_chegada), tempo_execucao(_execucao),
+    Processo(int _chegada, int _execucao, int _prioridade)
+        : id(-1), tempo_chegada(_chegada), tempo_execucao(_execucao),
           prioridade(_prioridade), tempo_espera(0), tempo_restante(_execucao),
           tempo_inicio_execucao(-1), ordem_chegada(-1), estado(NOVO) {}
 
@@ -44,11 +44,12 @@ public:
 
 class ProcessoCPU : public Processo {
 public:
-    ProcessoCPU(int id, int chegada, int tempo, int prioridade)
-        : Processo(id, chegada, tempo, prioridade) {}
+    ProcessoCPU(int chegada, int tempo, int prioridade)
+        : Processo(chegada, tempo, prioridade) {}
 
     bool executar_ciclo() override {
         tempo_restante--;
+        // Efetua algum cálculo pesado
         return true;
     }
 
@@ -60,23 +61,15 @@ public:
 class ProcessoIO : public Processo {
  public:
     int bloqueios = 2;  // Mudar ao critério
-    bool executando = true;
     
-    ProcessoIO(int id, int chegada, int tempo, int prioridade)
-    : Processo(id, chegada, tempo, prioridade) {}
+    ProcessoIO(int chegada, int tempo, int prioridade)
+    : Processo(chegada, tempo, prioridade) {}
     
     bool executar_ciclo() override {
         if (estado != EXECUTANDO) return false;
         
         tempo_restante--;
         
-        // // Simula bloqueio de I/O
-        // if (bloqueios > 0 && rand() % 2 == 0) {  // Se tiver bloqueios restantes e for o momento (aleatório)
-        //     bloqueios--;
-        //     estado = BLOQUEADO;
-        //     cout << "teste \n";
-        //     return true;
-        // }
         return true;
     }
         
@@ -89,8 +82,8 @@ class ProcessoMemoria : public Processo {
  public:
     int ciclos_aguardar = 4;  // Mudar ao critério
 
-    ProcessoMemoria(int id, int chegada, int tempo, int prioridade)
-        : Processo(id, chegada, tempo, prioridade) {}
+    ProcessoMemoria(int chegada, int tempo, int prioridade)
+        : Processo(chegada, tempo, prioridade) {}
 
     bool executar_ciclo() override {
         if (estado != EXECUTANDO) return false;

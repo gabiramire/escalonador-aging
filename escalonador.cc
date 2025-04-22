@@ -6,6 +6,7 @@
 
 void Escalonador::adicionar_processo(Processo* p) {
     p->ordem_chegada = proximo_num_ordem++;
+    p->id = ++id_processo;
     todos_processos.push_back(p);
 }
 
@@ -43,13 +44,13 @@ void Escalonador::executar_simulacao() {
     std::map<int, std::vector<std::string>> eventos_aging;
     std::map<int, std::map<int, std::string>> linha_tempo;
 
-    std::vector<int> time_retornos;
+    std::map<int, int> time_retornos;
     std::map<int, int> tempo_resposta;  // <id processo, tempo de resposta>
 
     Processo* executando = nullptr;
 
     while (processos_concluidos.size() < todos_processos.size()) {
-        // Chegada de processos e atualização da lista dos bloqueados
+        // Chegada de novos processos
         for (auto& p : todos_processos) {
             if (p->tempo_chegada == tempo_atual) {
                 p->estado = PRONTO;
@@ -57,11 +58,10 @@ void Escalonador::executar_simulacao() {
             }
         }
 
-        
         // Verifica se há processo executando; se terminou ou se deve bloquear
         if (executando) {
             if (executando->tempo_restante <= 0) {  // Fim de processo
-                time_retornos.push_back(tempo_atual - executando->tempo_chegada);
+                time_retornos.insert({executando->id, tempo_atual - executando->tempo_chegada});  // Tempo de retorno
                 executando->estado = CONCLUIDO;
                 processos_concluidos.push_back(executando);
                 executando = nullptr;
@@ -164,7 +164,7 @@ void Escalonador::executar_simulacao() {
 
     imprimir_linha_tempo(linha_tempo, eventos_aging, tempo_atual);
     std::cout << "\nTodos os processos foram concluidos!\n";
-    imprimir_retorno_medio(time_retornos);
+    imprimir_retornos(time_retornos);  // Agora imprime retorno médio e retornos individuais
     imprimir_tempo_resposta(tempo_resposta);
 }
 
@@ -193,15 +193,18 @@ void Escalonador::imprimir_linha_tempo(const std::map<int, std::map<int, std::st
     }
 }
 
-void Escalonador::imprimir_retorno_medio(std::vector<int> time_retornos) const {
+void Escalonador::imprimir_retornos(std::map<int, int> time_retornos) {
     if (time_retornos.empty()) {
         std::cout << "Nenhum processo foi concluído." << std::endl;
         return;
     }
 
-    double soma = 0;
-    for (int retorno : time_retornos) {
+    double soma = 0;  // Para cálculo do retorno médio
+
+    std::cout << "\n=== Tempo de retorno individual ===\n" << std::endl;
+    for (const auto& [id, retorno] : time_retornos) {
         soma += retorno;
+        std::cout << "P" << id << ": " << retorno << " ms" << std::endl;
     }
     double media = soma / time_retornos.size();
     std::cout << "\n === Tempo médio de retorno === \n" << media  << " ms"<< std::endl;
