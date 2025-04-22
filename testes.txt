@@ -1,0 +1,32 @@
+    // tempo_chegada, tempo_execucao, prioridade
+Processos e prioridades mistas:
+    escalonador.adicionar_processo(new ProcessoCPU(0, 4, 1));
+    escalonador.adicionar_processo(new ProcessoCPU(1, 5, 2));
+    escalonador.adicionar_processo(new ProcessoIO(2, 5, 3));
+    escalonador.adicionar_processo(new ProcessoIO(3, 4, 1));
+    escalonador.adicionar_processo(new ProcessoMemoria(3, 6, 3));
+    escalonador.adicionar_processo(new ProcessoMemoria(4, 3, 2));
+
+Full I/O:
+    escalonador.adicionar_processo(new ProcessoIO(0, 5, 3));
+    escalonador.adicionar_processo(new ProcessoIO(1, 4, 1));
+    escalonador.adicionar_processo(new ProcessoIO(2, 5, 3));
+    escalonador.adicionar_processo(new ProcessoIO(3, 4, 1));
+    escalonador.adicionar_processo(new ProcessoIO(4, 5, 3));
+    escalonador.adicionar_processo(new ProcessoIO(5, 4, 1));
+
+Full CPU (c/ um processo de baixíssima prioridade):
+    escalonador.adicionar_processo(new ProcessoCPU(0, 4, 5));
+    escalonador.adicionar_processo(new ProcessoCPU(1, 5, 8));
+    escalonador.adicionar_processo(new ProcessoCPU(2, 3, 10));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 6, 11));
+    escalonador.adicionar_processo(new ProcessoCPU(4, 4, 12));
+    escalonador.adicionar_processo(new ProcessoCPU(5, 5, 1));
+
+Misto com prioridades iniciais iguais:
+    escalonador.adicionar_processo(new ProcessoCPU(0, 4, 1));
+    escalonador.adicionar_processo(new ProcessoCPU(1, 5, 1));
+    escalonador.adicionar_processo(new ProcessoIO(2, 5, 1));
+    escalonador.adicionar_processo(new ProcessoIO(3, 4, 1));
+    escalonador.adicionar_processo(new ProcessoMemoria(3, 6, 1));
+    escalonador.adicionar_processo(new ProcessoMemoria(4, 3, 1));
