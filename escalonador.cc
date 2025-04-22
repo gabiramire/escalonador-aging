@@ -126,7 +126,7 @@ void Escalonador::executar_simulacao() {
                 linha_tempo[tempo_atual][i] = "  ";
             } else if (p == executando) {
                 bool executou = p->executar_ciclo();
-                linha_tempo[tempo_atual][i] = executou ? "##" : "##";  // Revisar essa linha
+                linha_tempo[tempo_atual][i] = executou ? "##" : "#";  // Revisar essa linha
             } else if (p->estado == PRONTO) {
                 linha_tempo[tempo_atual][i] = "--";
             } else if (p->estado == BLOQUEADO) {
