@@ -201,7 +201,7 @@ void Escalonador::imprimir_retorno_medio(std::vector<int> time_retornos) const {
 
     double soma = 0;
     for (int retorno : time_retornos) {
-        soma += retorno + soma;
+        soma += retorno;
     }
     double media = soma / time_retornos.size();
     std::cout << "\n === Tempo médio de retorno === \n" << media  << " ms"<< std::endl;
