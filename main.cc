@@ -10,8 +10,17 @@ int main() {
     escalonador.adicionar_processo(new ProcessoCPU(1, 0, 4, 1));
     escalonador.adicionar_processo(new ProcessoIO(2, 1, 5, 1, 3));
     escalonador.adicionar_processo(new ProcessoMemoria(3, 2, 6, 3, 2));
-    escalonador.adicionar_processo(new ProcessoMemoria(4, 5, 3, 2, 3));
+    escalonador.adicionar_processo(new ProcessoMemoria(4, 5, 3, 2, 1));
     escalonador.adicionar_processo(new ProcessoIO(5, 7, 4, 1, 1));
+
+    
+    escalonador.executar_simulacao();
+
+    escalonador.adicionar_processo(new ProcessoCPU(6, 0, 4, 1));
+    escalonador.adicionar_processo(new ProcessoIO(7, 1, 5, 1, 3));
+    escalonador.adicionar_processo(new ProcessoMemoria(8, 2, 6, 3, 2));
+    escalonador.adicionar_processo(new ProcessoMemoria(9, 5, 3, 2, 1));
+    escalonador.adicionar_processo(new ProcessoIO(10, 7, 4, 1, 1));
 
     
     escalonador.executar_simulacao();

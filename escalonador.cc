@@ -66,7 +66,7 @@ void Escalonador::executar_simulacao() {
 
                 // Se executando for um ProcessoIO, processo_io será != nullptr
                 auto* processo_io = dynamic_cast<ProcessoIO*>(executando);
-                if (processo_io && processo_io->bloqueios > 0 && rand() % 1 == 0) {
+                if (processo_io && processo_io->bloqueios > 0 && rand() % 2 == 0) {
                     executando->estado = BLOQUEADO;
                     processo_io->bloqueios--;
                     processos_bloqueados.push_back(executando);
