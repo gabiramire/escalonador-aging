@@ -17,6 +17,7 @@ public:
     int prioridade;
     int tempo_espera;
     int tempo_restante;
+    int tempo_inicio_execucao;
     int ordem_chegada;
     Estado estado;
     vector<string> linha_tempo;
@@ -24,7 +25,7 @@ public:
     Processo(int _id, int _chegada, int _execucao, int _prioridade)
         : id(_id), tempo_chegada(_chegada), tempo_execucao(_execucao),
           prioridade(_prioridade), tempo_espera(0), tempo_restante(_execucao),
-          ordem_chegada(-1), estado(NOVO) {}
+          tempo_inicio_execucao(-1), ordem_chegada(-1), estado(NOVO) {}
 
     virtual ~Processo() = default;
 
