@@ -77,35 +77,36 @@ class ProcessoIO : public Processo {
         return "IO";
     }
 };
-
 class ProcessoMemoria : public Processo {
- public:
-    int ciclos_aguardar = 4;  // Mudar ao critério
-
-    ProcessoMemoria(int chegada, int tempo, int prioridade)
-        : Processo(chegada, tempo, prioridade) {}
-
-    bool executar_ciclo() override {
-        if (estado != EXECUTANDO) return false;
-    
-        /*
-        Simula a espera das operações de memória.
-        */
-
-        if (ciclos_aguardar > 0) {
-            ciclos_aguardar--;
+    public:
+        bool primeira_execucao = true;
+       
+        ProcessoMemoria(int chegada, int tempo, int prioridade)
+            : Processo(chegada, tempo, prioridade) {}
+       
+        bool executar_ciclo() override {
+            if (estado != EXECUTANDO) return false;
+            
+            // Garante que a primeira execução seja produtiva
+            if (primeira_execucao) {
+                primeira_execucao = false;
+                tempo_restante--;
+                return true;
+            }
+            
+            // Simula stall com 30% de chance
+            if (rand() % 100 < 30) {
+                return false;  // mantém CPU ocupada sem progresso
+            }
+            
             tempo_restante--;
-            return false;
+            return true;
         }
-
-        tempo_restante--;
-    
-        return true; 
-    }        
-
-    string tipo() const override {
-        return "Mem";
-    }
-};
+       
+        string tipo() const override {
+            return "Mem";
+        }
+    };
+   
 
 #endif
