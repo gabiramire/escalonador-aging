@@ -5,7 +5,6 @@
 
 
 void Escalonador::adicionar_processo(Processo* p) {
-    p->ordem_chegada = proximo_num_ordem++;
     p->id = ++id_processo;
     todos_processos.push_back(p);
 }
@@ -86,9 +85,9 @@ void Escalonador::executar_simulacao() {
             Em caso de empate de prioridade, a ordem de chegada que conta.
             */
             auto it = std::max_element(fila_prontos.begin(), fila_prontos.end(), [&](Processo* a, Processo* b) {
-               return (a->prioridade < b->prioridade) ||
-               (a->prioridade == b->prioridade && a->ordem_chegada > b->ordem_chegada);
-            });
+                return (a->prioridade < b->prioridade) ||
+                       (a->prioridade == b->prioridade && a->tempo_chegada > b->tempo_chegada);
+            });            
             
             // Preempção e troca de processo executando
             Processo* candidato = *it;
@@ -96,8 +95,8 @@ void Escalonador::executar_simulacao() {
             // Se o candidato tiver igual prioridade, mas chegou antes, deve trocar também*
             if (candidato->prioridade > executando->prioridade ||
                 (candidato->prioridade == executando->prioridade && 
-                    candidato->ordem_chegada < executando->ordem_chegada)) {
-        
+                 candidato->tempo_chegada < executando->tempo_chegada))    {
+
                 executando->estado = PRONTO;
                 executando->tempo_espera = 0;
                 fila_prontos.push_back(executando);
@@ -112,8 +111,8 @@ void Escalonador::executar_simulacao() {
         if (!executando && !fila_prontos.empty()) {
             auto it = std::max_element(fila_prontos.begin(), fila_prontos.end(), [](Processo* a, Processo* b) {
                 return (a->prioridade < b->prioridade) ||
-                (a->prioridade == b->prioridade && a->ordem_chegada > b->ordem_chegada);  // desempate por ordem de chegada
-            });
+                       (a->prioridade == b->prioridade && a->tempo_chegada > b->tempo_chegada);
+            });            
             executando = *it; 
             executando->estado = EXECUTANDO;
             fila_prontos.erase(std::remove(fila_prontos.begin(), fila_prontos.end(), executando), fila_prontos.end());
@@ -148,7 +147,7 @@ void Escalonador::executar_simulacao() {
 
         // Simula desbloqueio de processos de I/O
         for (auto& p : processos_bloqueados) {
-            if (p->estado == BLOQUEADO && rand() % 4 == 0) { // Desbloqueio aleatório
+            if (p->estado == BLOQUEADO && rand() % 2 == 0) { // Desbloqueio aleatório
                 
                 p->estado = PRONTO;
                 fila_prontos.push_back(p);
