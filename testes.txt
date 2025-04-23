@@ -1,5 +1,5 @@
     // tempo_chegada, tempo_execucao, prioridade
-Processos e prioridades mistas:
+Cenário 1:
     escalonador.adicionar_processo(new ProcessoCPU(0, 4, 1));
     escalonador.adicionar_processo(new ProcessoCPU(1, 5, 2));
     escalonador.adicionar_processo(new ProcessoIO(2, 5, 3));
@@ -7,7 +7,40 @@ Processos e prioridades mistas:
     escalonador.adicionar_processo(new ProcessoMemoria(3, 6, 3));
     escalonador.adicionar_processo(new ProcessoMemoria(4, 3, 2));
 
-Full I/O:
+Cenário 2:
+    escalonador.adicionar_processo(new ProcessoCPU(0, 4, 5));
+    escalonador.adicionar_processo(new ProcessoCPU(1, 5, 8));
+    escalonador.adicionar_processo(new ProcessoCPU(2, 3, 10));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 6, 11));
+    escalonador.adicionar_processo(new ProcessoCPU(4, 4, 12));
+    escalonador.adicionar_processo(new ProcessoCPU(5, 5, 16));
+
+Cenário 3:
+    escalonador.adicionar_processo(new ProcessoCPU(0, 5, 1));
+    escalonador.adicionar_processo(new ProcessoCPU(1, 5, 1));
+    escalonador.adicionar_processo(new ProcessoCPU(2, 5, 1));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 5, 1));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 5, 1));
+    escalonador.adicionar_processo(new ProcessoCPU(4, 5, 1));
+
+
+Cenário 4:
+    escalonador.adicionar_processo(new ProcessoCPU(0, 4, 5));
+    escalonador.adicionar_processo(new ProcessoCPU(1, 5, 8));
+    escalonador.adicionar_processo(new ProcessoCPU(2, 3, 9));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 6, 6));
+    escalonador.adicionar_processo(new ProcessoCPU(4, 4, 7));
+    escalonador.adicionar_processo(new ProcessoCPU(5, 5, 1));
+
+    pt.2 (primeiros processos com muitos ciclos)
+    escalonador.adicionar_processo(new ProcessoCPU(0, 30, 5));
+    escalonador.adicionar_processo(new ProcessoCPU(1, 20, 8));
+    escalonador.adicionar_processo(new ProcessoCPU(2, 15, 9));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 25, 6));
+    escalonador.adicionar_processo(new ProcessoCPU(4, 20, 7));
+    escalonador.adicionar_processo(new ProcessoCPU(5, 10, 1));
+
+Cenário 5:
     escalonador.adicionar_processo(new ProcessoIO(0, 5, 3));
     escalonador.adicionar_processo(new ProcessoIO(1, 4, 1));
     escalonador.adicionar_processo(new ProcessoIO(2, 5, 3));
@@ -15,18 +48,18 @@ Full I/O:
     escalonador.adicionar_processo(new ProcessoIO(4, 5, 3));
     escalonador.adicionar_processo(new ProcessoIO(5, 4, 1));
 
-Full CPU (c/ um processo de baixíssima prioridade):
-    escalonador.adicionar_processo(new ProcessoCPU(0, 4, 5));
-    escalonador.adicionar_processo(new ProcessoCPU(1, 5, 8));
-    escalonador.adicionar_processo(new ProcessoCPU(2, 3, 10));
-    escalonador.adicionar_processo(new ProcessoCPU(3, 6, 11));
-    escalonador.adicionar_processo(new ProcessoCPU(4, 4, 12));
-    escalonador.adicionar_processo(new ProcessoCPU(5, 5, 1));
+Cenário 6:
+    escalonador.adicionar_processo(new ProcessoCPU(0, 5, 6));
+    escalonador.adicionar_processo(new ProcessoCPU(1, 5, 5));
+    escalonador.adicionar_processo(new ProcessoCPU(2, 5, 4));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 5, 3));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 5, 2));
+    escalonador.adicionar_processo(new ProcessoCPU(4, 5, 1));
 
-Misto com prioridades iniciais iguais:
-    escalonador.adicionar_processo(new ProcessoCPU(0, 4, 1));
-    escalonador.adicionar_processo(new ProcessoCPU(1, 5, 1));
-    escalonador.adicionar_processo(new ProcessoIO(2, 5, 1));
-    escalonador.adicionar_processo(new ProcessoIO(3, 4, 1));
-    escalonador.adicionar_processo(new ProcessoMemoria(3, 6, 1));
-    escalonador.adicionar_processo(new ProcessoMemoria(4, 3, 1));
+    2o slide:
+    escalonador.adicionar_processo(new ProcessoCPU(0, 10, 6));
+    escalonador.adicionar_processo(new ProcessoCPU(1, 10, 5));
+    escalonador.adicionar_processo(new ProcessoCPU(2, 10, 4));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 5, 3));
+    escalonador.adicionar_processo(new ProcessoCPU(3, 5, 2));
+    escalonador.adicionar_processo(new ProcessoCPU(4, 5, 1));
