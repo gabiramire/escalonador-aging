@@ -85,7 +85,7 @@ void Escalonador::executar_simulacao() {
             Escolhe da fila de prontos o processo com *maior* prioridade.
             Em caso de empate de prioridade, a ordem de chegada que conta.
             */
-           auto it = std::max_element(fila_prontos.begin(), fila_prontos.end(), [&](Processo* a, Processo* b) {
+            auto it = std::max_element(fila_prontos.begin(), fila_prontos.end(), [&](Processo* a, Processo* b) {
                return (a->prioridade < b->prioridade) ||
                (a->prioridade == b->prioridade && a->ordem_chegada > b->ordem_chegada);
             });
@@ -148,7 +148,7 @@ void Escalonador::executar_simulacao() {
 
         // Simula desbloqueio de processos de I/O
         for (auto& p : processos_bloqueados) {
-            if (p->estado == BLOQUEADO && rand() % 2 == 0) { // Desbloqueio aleatório
+            if (p->estado == BLOQUEADO && rand() % 4 == 0) { // Desbloqueio aleatório
                 
                 p->estado = PRONTO;
                 fila_prontos.push_back(p);
